@@ -1,34 +1,51 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Cash Register</a>
-    <div class="collapse navbar-collapse">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <%= link_to 'Continue Shopping', root_path, class: 'nav-link' %>
-            </li>
-        </ul>
-    </div>
+<a class="navbar-brand" href="#">Cash Register</a>
+<div class="collapse navbar-collapse">
+    <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+        <%= link_to 'Continue Shopping', root_path, class: 'nav-link' %>
+    </li>
+    </ul>
+</div>
 </nav>
 
 <div class="container mt-4">
-    <h1>Your Cart</h1>
-    <table class="table">
-        <thead>
+<% if notice %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <%= notice %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<% end %>
+<% if alert %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <%= alert %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<% end %>
+
+<h1>Your Cart</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @cart.cart_items.each do |item| %>
             <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Price</th>
+            <td><%= item.product.name %></td>
+            <td><%= item.quantity %></td>
+            <td><%= item.product.price %>€</td>
+            <td>
+                <%= button_to '+', add_product_cart_path(product_code: item.product.code), method: :post, class: 'btn btn-success' %>
+                <%= button_to '-', remove_product_cart_path(product_id: item.product.id), method: :delete, class: 'btn btn-danger' %>
+            </td>
             </tr>
-        </thead>
-        <tbody>
-            <% @cart.cart_items.each do |item| %>
-                <tr>
-                    <td><%= item.product.name %></td>
-                    <td><%= item.quantity %></td>
-                    <td><%= item.product.price %>€</td>
-                </tr>
-            <% end %>
-        </tbody>
-    </table>
-    
-    <h3>Total Price: <%= @cart.total_price %>€</h3>
+        <% end %>
+    </tbody>
+</table>
+<h3>Total Price: <%= @cart.total_price %>€</h3>
 </div>

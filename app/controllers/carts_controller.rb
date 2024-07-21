@@ -9,6 +9,11 @@ class CartsController < ApplicationController
     redirect_to cart_path, notice: 'Product added to cart.'
   end
 
+  def remove_product
+    @cart.remove_product(params[:product_id])
+    redirect_to cart_path, notice: 'Product removed from cart.'
+  end
+
   private
 
   def set_cart
