@@ -25,7 +25,7 @@ This is a simple cash register application built with Ruby on Rails. It allows u
 
 1. Clone the repository:
     ```
-    git clone https://github.com/your-username/cash_register.git
+    git clone https://github.com/raresroca05/cash_register
     cd cash_register
     ```
 
